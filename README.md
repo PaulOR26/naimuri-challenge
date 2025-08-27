@@ -6,16 +6,22 @@ This project was to create a React + TypeScript app that connects to the GitHub 
 
 ### `Clone the repo`
 
-git clone
-cd
+```
+git clone https://github.com/PaulOR26/naimuri-challenge.git
+cd naimuri-challenge
+```
 
 ### `Install dependencies`
 
+```
 npm install
+```
 
 ### `Start the development server`
 
+```
 npm start
+```
 
 ## Implementation
 
