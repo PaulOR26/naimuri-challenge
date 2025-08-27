@@ -1,14 +1,6 @@
 import { LIMIT } from './constants';
+import { RepoType, UseReposParams } from './interfaces';
 import { useState, useEffect } from 'react';
-
-interface UseReposParams {
-  createdFrom: string;
-  createdTo: string;
-  orderBy: string;
-  page: number;
-  searchTerm: string;
-  sortBy: string;
-}
 
 export const useRepos = ({
   createdFrom,
@@ -18,7 +10,7 @@ export const useRepos = ({
   searchTerm,
   sortBy,
 }: UseReposParams) => {
-  const [repos, setRepos] = useState([]);
+  const [repos, setRepos] = useState<RepoType[]>([]);
   const [repoCount, setRepoCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -28,7 +20,6 @@ export const useRepos = ({
 
     if (!parsedSearchTerm) return;
 
-    setIsLoading(true);
     setError('');
 
     try {
@@ -52,10 +43,12 @@ export const useRepos = ({
   };
 
   useEffect(() => {
+    if (searchTerm) setIsLoading(true);
+
     const delayDebounce = setTimeout(fetchRepos, 500);
 
     return () => clearTimeout(delayDebounce);
   }, [createdFrom, createdTo, orderBy, page, searchTerm, sortBy]);
 
-  return { repos, repoCount, isLoading, error };
+  return { error, isLoading, repoCount, repos };
 };

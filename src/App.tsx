@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { LIMIT } from './constants';
 import { useRepos } from './useRepos';
 
+import Repo from './Repo';
+
 import './App.css';
 
 const today = new Date();
@@ -102,12 +104,48 @@ function App() {
           <option value='asc'>Lowest to Highest</option>
         </select>
 
-        {page < totalPages ? (
+        {isLoading ? (
+          <p>Loading repos...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : repos.length > 0 ? (
+          <ul>
+            {repos.map(
+              ({
+                forks_count,
+                full_name,
+                html_url,
+                id,
+                name,
+                open_issues_count,
+                owner,
+                stargazers_count,
+              }) => (
+                <Repo
+                  forks_count={forks_count}
+                  full_name={full_name}
+                  html_url={html_url}
+                  key={id}
+                  name={name}
+                  open_issues_count={open_issues_count}
+                  owner={owner}
+                  stargazers_count={stargazers_count}
+                />
+              )
+            )}
+          </ul>
+        ) : (
+          <p>
+            {searchTerm
+              ? 'No repos found for search criteria'
+              : 'Search for repos'}
+          </p>
+        )}
+
+        {page < totalPages && (
           <button disabled={isLoading} onClick={handleLoadMore}>
             {isLoading ? 'Loading...' : 'Load More'}
           </button>
-        ) : (
-          <p>No more results</p>
         )}
       </main>
     </div>
