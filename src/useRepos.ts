@@ -18,7 +18,13 @@ export const useRepos = ({
   const fetchRepos = async () => {
     const parsedSearchTerm = searchTerm.trim();
 
-    if (!parsedSearchTerm) return;
+    if (!parsedSearchTerm) {
+      setRepos([]);
+      setRepoCount(0);
+      setIsLoading(false);
+
+      return;
+    }
 
     setError('');
 
@@ -43,12 +49,24 @@ export const useRepos = ({
   };
 
   useEffect(() => {
-    if (searchTerm) setIsLoading(true);
+    if (searchTerm) {
+      setIsLoading(true);
+      setRepos([]);
+      setRepoCount(0);
+      const delayDebounce = setTimeout(fetchRepos, 500);
 
-    const delayDebounce = setTimeout(fetchRepos, 500);
+      return () => clearTimeout(delayDebounce);
+    } else {
+      setRepos([]);
+      setRepoCount(0);
+      setIsLoading(false);
+    }
+  }, [createdFrom, createdTo, orderBy, searchTerm, sortBy]);
 
-    return () => clearTimeout(delayDebounce);
-  }, [createdFrom, createdTo, orderBy, page, searchTerm, sortBy]);
+  useEffect(() => {
+    setIsLoading(true);
+    fetchRepos();
+  }, [page]);
 
   return { error, isLoading, repoCount, repos };
 };

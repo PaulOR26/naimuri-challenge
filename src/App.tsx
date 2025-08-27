@@ -4,7 +4,7 @@ import { useRepos } from './useRepos';
 
 import Repo from './Repo';
 
-import './App.css';
+import './App.scss';
 
 const today = new Date();
 const threeMonthsAgo = new Date();
@@ -57,96 +57,106 @@ function App() {
       <header>Github API</header>
 
       <main>
-        <label htmlFor='search-input'>Search</label>
+        <div className='search-criteria'>
+          <div className='search-by'>
+            <label htmlFor='search-input'>Search</label>
 
-        <input
-          id='search-input'
-          onChange={handleChangeSearch}
-          placeholder='Enter search term'
-          value={searchTerm}
-        />
+            <input
+              id='search-input'
+              onChange={handleChangeSearch}
+              placeholder='Enter search term'
+              value={searchTerm}
+            />
 
-        <label>Created</label>
+            <label htmlFor='from-date'>Created from</label>
 
-        <label htmlFor='from-date'>From</label>
+            <input
+              id='from-date'
+              onChange={handleChangeCreatedFrom}
+              type='date'
+              value={createdFrom}
+            />
 
-        <input
-          id='from-date'
-          onChange={handleChangeCreatedFrom}
-          type='date'
-          value={createdFrom}
-        />
+            <label htmlFor='to-date'>Created to</label>
 
-        <label htmlFor='to-date'>To</label>
+            <input
+              id='to-date'
+              onChange={handleChangeCreatedTo}
+              type='date'
+              value={createdTo}
+            />
+          </div>
 
-        <input
-          id='to-date'
-          onChange={handleChangeCreatedTo}
-          type='date'
-          value={createdTo}
-        />
+          <div className='sort-by'>
+            <label htmlFor='sort-select'>Sort</label>
 
-        <label htmlFor='sort-select'>Sort</label>
+            <select
+              id='sort-select'
+              onChange={handleChangeSortBy}
+              value={sortBy}
+            >
+              <option value='stars'>Stars</option>
+              <option value='forks'>Forks</option>
+            </select>
 
-        <select id='sort-select' onChange={handleChangeSortBy} value={sortBy}>
-          <option value='stars'>Stars</option>
-          <option value='forks'>Forks</option>
-        </select>
+            <label htmlFor='order-select'>Sort order</label>
 
-        <label htmlFor='order-select'>Order</label>
+            <select
+              id='order-select'
+              onChange={handleChangeOrderBy}
+              value={orderBy}
+            >
+              <option value='desc'>Highest to Lowest</option>
+              <option value='asc'>Lowest to Highest</option>
+            </select>
+          </div>
+        </div>
 
-        <select
-          id='order-select'
-          onChange={handleChangeOrderBy}
-          value={orderBy}
-        >
-          <option value='desc'>Highest to Lowest</option>
-          <option value='asc'>Lowest to Highest</option>
-        </select>
+        <div className='repo-display'>
+          {repos.length > 0 ? (
+            <ul>
+              {repos.map(
+                ({
+                  forks_count,
+                  full_name,
+                  html_url,
+                  id,
+                  name,
+                  open_issues_count,
+                  owner,
+                  stargazers_count,
+                }) => (
+                  <Repo
+                    forks_count={forks_count}
+                    full_name={full_name}
+                    html_url={html_url}
+                    key={id}
+                    name={name}
+                    open_issues_count={open_issues_count}
+                    owner={owner}
+                    stargazers_count={stargazers_count}
+                  />
+                )
+              )}
+            </ul>
+          ) : isLoading ? (
+            <p className='search-repo-text'>Loading repos...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            <p className='search-repo-text'>
+              {searchTerm
+                ? 'No repos found for search criteria'
+                : 'Search for repos 🔎'}
+            </p>
+          )}
 
-        {isLoading ? (
-          <p>Loading repos...</p>
-        ) : error ? (
-          <p>{error}</p>
-        ) : repos.length > 0 ? (
-          <ul>
-            {repos.map(
-              ({
-                forks_count,
-                full_name,
-                html_url,
-                id,
-                name,
-                open_issues_count,
-                owner,
-                stargazers_count,
-              }) => (
-                <Repo
-                  forks_count={forks_count}
-                  full_name={full_name}
-                  html_url={html_url}
-                  key={id}
-                  name={name}
-                  open_issues_count={open_issues_count}
-                  owner={owner}
-                  stargazers_count={stargazers_count}
-                />
-              )
-            )}
-          </ul>
-        ) : (
-          <p>
-            {searchTerm
-              ? 'No repos found for search criteria'
-              : 'Search for repos'}
-          </p>
-        )}
-
-        {page < totalPages && (
-          <button disabled={isLoading} onClick={handleLoadMore}>
-            {isLoading ? 'Loading...' : 'Load More'}
-          </button>
-        )}
+          {page < totalPages && (
+            <button disabled={isLoading} onClick={handleLoadMore}>
+              {isLoading ? 'Loading...' : 'Load More'}
+            </button>
+          )}
+        </div>
       </main>
     </div>
   );

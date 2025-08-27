@@ -13,25 +13,37 @@ function RepoMore({
 
   return (
     <>
-      <p>Forks</p>
+      <div className='repo-data'>
+        <p className='repo-data-title'>Forks</p>
 
-      <p>{forks_count}</p>
+        <p>{forks_count}</p>
+      </div>
 
-      <p>Stars</p>
+      <div className='repo-data'>
+        <p className='repo-data-title'>Stars</p>
 
-      <p>{stargazers_count}</p>
+        <p>{stargazers_count}</p>
+      </div>
 
-      <p>Issues</p>
+      <div className='repo-data'>
+        <p className='repo-data-title'>Issues</p>
 
-      <p>{open_issues_count}</p>
+        <p>{open_issues_count}</p>
+      </div>
 
-      {isLoading ? (
-        <p>Loading readme...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <Markdown>{readme}</Markdown>
-      )}
+      <div className='repo-data'>
+        <p className='repo-data-title'>Readme</p>
+
+        {isLoading ? (
+          <p>Loading readme...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <div className='readme'>
+            <Markdown>{readme}</Markdown>
+          </div>
+        )}
+      </div>
     </>
   );
 }

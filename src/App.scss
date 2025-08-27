@@ -1,0 +1,172 @@
+@import './styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: $font-family;
+  background-color: $background-color;
+}
+
+p {
+  margin: 0;
+}
+
+header {
+  background-color: $primary-color;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 1rem;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 80rem;
+  padding: 1rem;
+
+  .search-criteria {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .search-by {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 16rem;
+      width: 16rem;
+    }
+
+    .sort-by {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-width: 16rem;
+      width: 16rem;
+    }
+  }
+
+  .repo-display {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 100%;
+  }
+
+  label {
+    font-weight: 700;
+  }
+
+  input,
+  select {
+    padding: 0.2rem 0.5rem;
+    border: $border;
+    border-radius: $border-radius;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+
+  .search-repo-text {
+    font-weight: 700;
+    font-size: 2rem;
+    margin: auto;
+    text-align: center;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+
+    li {
+      background: white;
+      border-radius: $border-radius;
+      border: $primary-color;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+
+      .repo-data {
+        display: flex;
+        flex-flow: row wrap;
+        gap: 0.5rem;
+
+        .repo-data-title {
+          font-weight: 700;
+        }
+      }
+
+      a {
+        color: $primary-color;
+      }
+
+      .readme {
+        flex: 1;
+        max-height: 30rem;
+        overflow: scroll;
+      }
+    }
+  }
+
+  button {
+    align-self: center;
+    background-color: $primary-color;
+    border: none;
+    border-radius: $border-radius;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: darken($primary-color, 15%);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+}
+
+@media (max-width: 55rem) {
+  main {
+    flex-direction: column;
+
+    .search-criteria {
+      flex-flow: row wrap;
+      gap: 1rem;
+      justify-content: center;
+      max-width: unset;
+
+      .search-by {
+        flex: 1;
+        width: unset;
+      }
+
+      .sort-by {
+        flex: 1;
+        width: unset;
+      }
+    }
+
+    .repo-display {
+      min-width: unset;
+    }
+  }
+}

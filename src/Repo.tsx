@@ -20,24 +20,28 @@ function Repo({
 
   return (
     <li>
-      <p>Repo name</p>
+      <div className='repo-data'>
+        <p className='repo-data-title'>Repo name</p>
 
-      <p>{name}</p>
+        <p>{name}</p>
+      </div>
 
-      <p>Owner</p>
+      <div className='repo-data'>
+        <p className='repo-data-title'>Owner</p>
 
-      {owner && (
-        <a href={owner.html_url} target='_blank'>
-          {owner.login}
-        </a>
-      )}
+        {owner && (
+          <a href={owner.html_url} target='_blank'>
+            {owner.login}
+          </a>
+        )}
+      </div>
 
       <a href={html_url} target='_blank'>
         Link to repo
       </a>
 
       <button onClick={handleShowMore}>
-        {isShowingMore ? 'Less' : 'More'}
+        {isShowingMore ? 'Show less' : 'Show more'}
       </button>
 
       {isShowingMore && (
