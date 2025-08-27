@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div>
-      <header>Github API</header>
+      <header>GitHub API</header>
 
       <main>
         <div className='search-criteria'>
